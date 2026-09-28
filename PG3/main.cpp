@@ -1,79 +1,70 @@
+#include <algorithm>
 #include <iostream>
-#include <list>
-#include <cstring>
+#include <string>
+#include <vector>
 
-using StationList = std::list<const char*>;
-
-void printStations(const char* year,const StationList& stations) {
-
-	std::cout << "\n--- Yamanote Line (" << year << ") --- \n";
-
-    std::cout << "Counterclockwise (Inner loop):\n";
-	for (const char* station : stations) {
-		std::cout << station << '\n';
-	}
-
-    std::cout << "Clockwise (Outer loop):\n";
-	for (auto it = stations.rbegin(); it != stations.rend(); ++it) {
-		std::cout << *it << '\n';
-	}
-}
-
-void insertBefore(StationList& stations, const char* beforeStation, const char* newStation) {
-
-	for (auto it = stations.begin(); it != stations.end(); ++it) {
-
-		if (std::strcmp(*it, beforeStation) == 0) {
-
-			stations.insert(it, newStation);
-
-			return;
-		}
-	}
-}
-
-int main() {
-
-    StationList stations1970 = {
-        "Shinagawa",
-        "Tamachi",
-        "Hamamatsucho",
-        "Shimbashi",
-        "Yurakucho",
-        "Tokyo",
-        "Kanda",
-        "Akihabara",
-        "Okachimachi",
-        "Ueno",
-        "Uguisudani",
-        "Nippori",
-        "Tabata",
-        "Komagome",
-        "Sugamo",
-        "Otsuka",
-        "Ikebukuro",
-        "Mejiro",
-        "Takadanobaba",
-        "Shin-Okubo",
-        "Shinjuku",
-        "Yoyogi",
-        "Harajuku",
-        "Shibuya",
-        "Ebisu",
-        "Meguro",
-        "Gotanda",
-        "Osaki"
+int main()
+{
+    std::vector<std::string> students = {
+        "k024g1017@g.neec.ac.jp",
+        "k024g0033@g.neec.ac.jp",
+        "k024g0057@g.neec.ac.jp",
+        "k024g0020@g.neec.ac.jp",
+        "k024g0109@g.neec.ac.jp",
+        "k024g1031@g.neec.ac.jp",
+        "k024g0004@g.neec.ac.jp",
+        "k024g0027@g.neec.ac.jp",
+        "k024g0058@g.neec.ac.jp",
+        "k022g0113@g.neec.ac.jp",
+        "k024g0007@g.neec.ac.jp",
+        "k024g0083@g.neec.ac.jp",
+        "k024g0110@g.neec.ac.jp",
+        "k024g0066@g.neec.ac.jp",
+        "k023g0029@g.neec.ac.jp",
+        "k024g1030@g.neec.ac.jp",
+        "k024g0106@g.neec.ac.jp",
+        "k024g0089@g.neec.ac.jp",
+        "k024g0101@g.neec.ac.jp",
+        "k024g0035@g.neec.ac.jp",
+        "k024g1025@g.neec.ac.jp",
+        "k024g0059@g.neec.ac.jp",
+        "k024g0006@g.neec.ac.jp",
+        "k023g0122@g.neec.ac.jp",
+        "k024g0028@g.neec.ac.jp",
+        "k024g1024@g.neec.ac.jp",
+        "k024g0108@g.neec.ac.jp",
+        "k024g0061@g.neec.ac.jp",
+        "k024g0104@g.neec.ac.jp",
+        "k024g0038@g.neec.ac.jp",
+        "k024g0032@g.neec.ac.jp",
+        "k024g0026@g.neec.ac.jp",
+        "k024g0001@g.neec.ac.jp",
+        "k024g0009@g.neec.ac.jp",
+        "k024g0112@g.neec.ac.jp",
+        "k024g0011@g.neec.ac.jp",
+        "k024g0085@g.neec.ac.jp",
+        "k024g0111@g.neec.ac.jp",
+        "k024g0045@g.neec.ac.jp",
+        "k024g0103@g.neec.ac.jp",
+        "k024g1002@g.neec.ac.jp",
+        "k024g0078@g.neec.ac.jp",
+        "k024g0044@g.neec.ac.jp",
+        "k024g0008@g.neec.ac.jp",
+        "k024g0075@g.neec.ac.jp",
+        "k024g0091@g.neec.ac.jp",
+        "k024g0064@g.neec.ac.jp",
+        "k024g0051@g.neec.ac.jp",
+        "k024g0093@g.neec.ac.jp",
+        "k024g0024@g.neec.ac.jp"
     };
 
-    StationList stations2019 = stations1970;
-    insertBefore(stations2019,"Tabata","Nishi-Nippori");
+    // 学籍番号順に並べ替える
+    std::sort(students.begin(), students.end());
 
-	StationList stations2022 = stations2019;
-	insertBefore(stations2022, "Tamachi", "Takanawa Gateway");
+    // ソート後だけを表示する
+    for (const std::string& student : students) {
+        std::cout << student << '\n';
+    }
 
-	printStations("1970", stations1970);
-	printStations("2019", stations2019);
-	printStations("2022", stations2022);
-
-	return 0;
+    return 0;
 }
