@@ -1,26 +1,31 @@
 #include <iostream>
 
-// 2つの値を比較して、小さい値を返す関数テンプレート
-template <typename T>
-T Min(T a, T b)
-{
-    return (a < b) ? a : b;
-}
-
 int main()
 {
-    int intA = 12;
-    int intB = 5;
+    const int normalHourlyWage = 1226;
+    int recurringHourlyWage = 1000;
+    int normalTotalWage = 0;
+    int recurringTotalWage = 0;
+    int hours = 0;
 
-    float floatA = 3.5f;
-    float floatB = 7.2f;
+    std::cout << "Hours  Normal  Recurring\n";
 
-    double doubleA = 9.81;
-    double doubleB = 6.02;
+    // 再帰的賃金の累計が通常賃金の累計を上回るまで計算する
+    do {
+        ++hours;
+        normalTotalWage += normalHourlyWage;
+        recurringTotalWage += recurringHourlyWage;
 
-    std::cout << "int: " << Min(intA, intB) << '\n';
-    std::cout << "float: " << Min(floatA, floatB) << '\n';
-    std::cout << "double: " << Min(doubleA, doubleB) << '\n';
+        std::cout << hours << "      "
+                  << normalTotalWage << "    "
+                  << recurringTotalWage << '\n';
+
+        // 次の1時間分の再帰的賃金を計算する
+        recurringHourlyWage = recurringHourlyWage * 2 - 50;
+    } while (recurringTotalWage <= normalTotalWage);
+
+    std::cout << "\nRecurring wage becomes higher after "
+              << hours << " hours.\n";
 
     return 0;
 }
