@@ -1,31 +1,36 @@
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <Windows.h>
+
+void ShowResult(int roll, int userGuess) {
+	printf("出目は%dでした。\n", roll);
+
+	if (roll % 2 == userGuess) {
+		printf("正解\n");
+	} else {
+		printf("不正解\n");
+	}
+}
+
+void DelayReveal(void (*fn)(int, int), unsigned int delayMs, int roll, int userGuess) {
+	Sleep(delayMs);
+	fn(roll, userGuess);
+}
 
 int main()
 {
-    const int normalHourlyWage = 1226;
-    int recurringHourlyWage = 1000;
-    int normalTotalWage = 0;
-    int recurringTotalWage = 0;
-    int hours = 0;
+	SetConsoleOutputCP(CP_UTF8);
 
-    std::cout << "Hours  Normal  Recurring\n";
+	srand((unsigned)time(NULL));
 
-    // 再帰的賃金の累計が通常賃金の累計を上回るまで計算する
-    do {
-        ++hours;
-        normalTotalWage += normalHourlyWage;
-        recurringTotalWage += recurringHourlyWage;
+	int userGuess;
+	printf("出目を予想してください（奇数: 1、偶数: 0）: ");
+	scanf_s("%d", &userGuess);
 
-        std::cout << hours << "      "
-                  << normalTotalWage << "    "
-                  << recurringTotalWage << '\n';
+	int roll = rand() % 6 + 1;
 
-        // 次の1時間分の再帰的賃金を計算する
-        recurringHourlyWage = recurringHourlyWage * 2 - 50;
-    } while (recurringTotalWage <= normalTotalWage);
-
-    std::cout << "\nRecurring wage becomes higher after "
-              << hours << " hours.\n";
+	DelayReveal(ShowResult, 3000, roll, userGuess);
 
     return 0;
 }
