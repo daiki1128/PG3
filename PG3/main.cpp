@@ -1,57 +1,30 @@
-#include <iostream>
+#include <Novice.h>
 
-class IShape {
-public:
-    virtual void Size() = 0;
-    virtual void Draw() = 0;
-    virtual ~IShape() = default;
-};
+#include "Game.h"
+#include "InputManager.h"
 
-class Circle : public IShape {
-private:
-    double radius;
-    double area = 0;
+const char kWindowTitle[] = "PG3 Shooting";
 
-public:
-    Circle(double r) : radius(r) {}
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
+    Novice::Initialize(kWindowTitle, 1280, 720);
 
-    void Size() override {
-        area = 3.141592653589793 * radius * radius;
+    InputManager input;
+    Game game;
+
+    while (Novice::ProcessMessage() == 0) {
+        Novice::BeginFrame();
+
+        input.Update();
+        game.Update(input);
+        game.Draw();
+
+        Novice::EndFrame();
+
+        if (input.IsTriggered(DIK_ESCAPE)) {
+            break;
+        }
     }
 
-    void Draw() override {
-        std::cout << "Circle area: " << area << '\n';
-    }
-};
-
-class Rectangle : public IShape {
-private:
-    double width;
-    double height;
-    double area = 0;
-
-public:
-    Rectangle(double w, double h) : width(w), height(h) {}
-
-    void Size() override {
-        area = width * height;
-    }
-
-    void Draw() override {
-        std::cout << "Rectangle area: " << area << '\n';
-    }
-};
-
-int main() {
-    Circle circle(3.0);
-    Rectangle rectangle(4.0, 5.0);
-
-    IShape* shapes[] = { &circle, &rectangle };
-
-    for (IShape* shape : shapes) {
-        shape->Size();
-        shape->Draw();
-    }
-
+    Novice::Finalize();
     return 0;
 }
