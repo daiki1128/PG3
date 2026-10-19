@@ -1,35 +1,59 @@
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <Windows.h>
+#include <iostream>
 
-int main()
+class Enemy {
+
+public:
+
+	Enemy();
+
+	bool Update();
+
+private:
+
+	using State = void (Enemy::*)();
+	State currentState;
+
+	void Approach();
+	void Shoot();
+	void Retreat();
+
+};
+
+Enemy::Enemy() : currentState(&Enemy::Approach) {}
+
+bool Enemy::Update() {
+	if (currentState == nullptr) {
+		return false;
+	}
+
+	(this->*currentState)();
+	return true;
+}
+
+void Enemy::Approach()
 {
-	SetConsoleOutputCP(CP_UTF8);
+	std::cout << "Approach\n";
+	currentState = &Enemy::Shoot;
+}
 
-	auto ShowResult=[](int roll,int userGuess) {
-		printf("出目は%dでした。\n", roll);
+void Enemy::Shoot()
+{
+	std::cout << "Shoot\n";
+	currentState = &Enemy::Retreat;
+}
 
-		if (roll % 2 == userGuess) {
-			printf("正解\n");
-		} else {
-			printf("不正解\n");
-		}
-	};
+void Enemy::Retreat()
+{
+	std::cout << "Retreat\n";
+	currentState = nullptr;  // 行動終了
+}
 
-	auto DelayReveal=[](void (*fn)(int, int), unsigned int delayMs, int roll, int userGuess) {
-		Sleep(delayMs);
-		fn(roll, userGuess);
-	};
+int main() {
+	Enemy enemy;
 
-	srand((unsigned)time(NULL));
+	while (enemy.Update()) {
 
-	int userGuess;
-	printf("出目を予想してください（奇数: 1、偶数: 0）: ");
-	scanf_s("%d", &userGuess);
+	}
 
-	int roll = rand() % 6 + 1;
-	DelayReveal(ShowResult, 3000, roll, userGuess);
-
-    return 0;
+	return 0;
 }
