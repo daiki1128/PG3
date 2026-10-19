@@ -1,31 +1,56 @@
 #include <iostream>
 
-class Animal {
+class IShape {
 public:
-    virtual void Speak() const = 0;
+    virtual void Size() = 0;
+    virtual void Draw() = 0;
+    virtual ~IShape() = default;
 };
 
-class Dog : public Animal {
+class Circle : public IShape {
+private:
+    double radius;
+    double area = 0;
+
 public:
-    void Speak() const override {
-        std::cout << "Woof!\n";
+    Circle(double r) : radius(r) {}
+
+    void Size() override {
+        area = 3.141592653589793 * radius * radius;
+    }
+
+    void Draw() override {
+        std::cout << "Circle area: " << area << '\n';
     }
 };
 
-class Cat : public Animal {
+class Rectangle : public IShape {
+private:
+    double width;
+    double height;
+    double area = 0;
+
 public:
-    void Speak() const override {
-        std::cout << "Meow!\n";
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    void Size() override {
+        area = width * height;
+    }
+
+    void Draw() override {
+        std::cout << "Rectangle area: " << area << '\n';
     }
 };
 
 int main() {
-    Dog dog;
-    Cat cat;
+    Circle circle(3.0);
+    Rectangle rectangle(4.0, 5.0);
 
-    const Animal* animals[] = { &dog, &cat };
-    for (const Animal* animal : animals) {
-        animal->Speak();
+    IShape* shapes[] = { &circle, &rectangle };
+
+    for (IShape* shape : shapes) {
+        shape->Size();
+        shape->Draw();
     }
 
     return 0;
