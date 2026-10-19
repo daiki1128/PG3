@@ -53,6 +53,12 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Label="KamataEngine">
+    <KamataEngineRoot Condition="'$(KamataEngineRoot)'=='' and '$(KAMATA_ENGINE_ROOT)'!=''">$(KAMATA_ENGINE_ROOT)</KamataEngineRoot>
+    <KamataEngineRoot Condition="'$(KamataEngineRoot)'=='' and Exists('$(USERPROFILE)\Downloads\KamataEngine20260910\Adapter\Novice.h')">$(USERPROFILE)\Downloads\KamataEngine20260910</KamataEngineRoot>
+    <KamataEngineRoot Condition="'$(KamataEngineRoot)'=='' and Exists('C:\KamataEngine\Adapter\Novice.h')">C:\KamataEngine</KamataEngineRoot>
+    <KamataEngineRoot Condition="'$(KamataEngineRoot)'==''">$(USERPROFILE)\Downloads\KamataEngine20260910</KamataEngineRoot>
+  </PropertyGroup>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -110,7 +116,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -130,6 +136,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -142,13 +149,41 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(KamataEngineRoot)\Adapter;$(KamataEngineRoot)\External\imgui;$(KamataEngineRoot)\External\KamataEngine\include;$(KamataEngineRoot)\External\DirectXTex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(KamataEngineRoot)\External\KamataEngine\lib\$(Configuration);$(KamataEngineRoot)\External\DirectXTex\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>KamataEngine.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="$(KamataEngineRoot)\Adapter\Novice.cpp" Condition="'$(Platform)'=='x64'" />
+    <ClInclude Include="$(KamataEngineRoot)\Adapter\Novice.h" Condition="'$(Platform)'=='x64'" />
   </ItemGroup>
+  <Target Name="CheckKamataEngine" BeforeTargets="PrepareForBuild" Condition="'$(Platform)'=='x64'">
+    <Error Condition="!Exists('$(KamataEngineRoot)\Adapter\Novice.h')" Text="KamataEngine/Novice not found at $(KamataEngineRoot). Set KAMATA_ENGINE_ROOT to the extracted KamataEngine folder." />
+  </Target>
+  <Target Name="CopyNoviceRuntime" AfterTargets="Build" Condition="'$(Platform)'=='x64'">
+    <ItemGroup>
+      <NoviceResource Include="$(KamataEngineRoot)\DirectXGame\Resources\**\*.*" />
+      <EngineShader Include="$(KamataEngineRoot)\External\KamataEngine\shaders\**\*.*" />
+      <NoviceShader Include="$(KamataEngineRoot)\Novice\shaders\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NoviceResource)" DestinationFiles="@(NoviceResource->'$(TargetDir)NoviceResources\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(EngineShader)" DestinationFiles="@(EngineShader->'$(TargetDir)NoviceResources\shaders\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(NoviceShader)" DestinationFiles="@(NoviceShader->'$(TargetDir)NoviceResources\shaders\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxcompiler.dll;$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <LocalDebuggerWorkingDirectory>$(TargetDir)</LocalDebuggerWorkingDirectory>
+  </PropertyGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
