@@ -116,13 +116,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;USE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Manifest>
@@ -135,14 +135,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Manifest>
@@ -163,6 +163,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Scenes\TitleScene.cpp" />
+    <ClCompile Include="Scenes\StageScene.cpp" />
+    <ClCompile Include="Scenes\ClearScene.cpp" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IScene.h" />
+    <ClInclude Include="Scenes\TitleScene.h" />
+    <ClInclude Include="Scenes\StageScene.h" />
+    <ClInclude Include="Scenes\ClearScene.h" />
     <ClCompile Include="$(KamataEngineRoot)\Adapter\Novice.cpp" Condition="'$(Platform)'=='x64'" />
     <ClInclude Include="$(KamataEngineRoot)\Adapter\Novice.h" Condition="'$(Platform)'=='x64'" />
   </ItemGroup>
