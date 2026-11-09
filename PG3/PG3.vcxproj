@@ -163,17 +163,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Scenes\TitleScene.cpp" />
-    <ClCompile Include="Scenes\StageScene.cpp" />
-    <ClCompile Include="Scenes\ClearScene.cpp" />
-    <ClInclude Include="Game.h" />
+    <ClCompile Include="MovableRectangle.cpp" />
+    <ClCompile Include="Commands\MoveLeftCommand.cpp" />
+    <ClCompile Include="Commands\MoveRightCommand.cpp" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="IScene.h" />
-    <ClInclude Include="Scenes\TitleScene.h" />
-    <ClInclude Include="Scenes\StageScene.h" />
-    <ClInclude Include="Scenes\ClearScene.h" />
+    <ClInclude Include="MovableRectangle.h" />
+    <ClInclude Include="Commands\ICommand.h" />
+    <ClInclude Include="Commands\MoveLeftCommand.h" />
+    <ClInclude Include="Commands\MoveRightCommand.h" />
     <ClCompile Include="$(KamataEngineRoot)\Adapter\Novice.cpp" Condition="'$(Platform)'=='x64'" />
     <ClInclude Include="$(KamataEngineRoot)\Adapter\Novice.h" Condition="'$(Platform)'=='x64'" />
   </ItemGroup>

@@ -16,8 +16,8 @@
     <Filter Include="Novice">
       <UniqueIdentifier>{D51B530B-3A45-4710-9EAF-14ACB7B43A62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{8DC3EE30-E100-45D5-89A2-A88C60B29395}</UniqueIdentifier>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{D6A71A1A-034E-4C8C-9A1A-93985614A00F}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,43 +27,37 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TitleScene.cpp">
-      <Filter>Scenes</Filter>
+    <ClCompile Include="MovableRectangle.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\StageScene.cpp">
-      <Filter>Scenes</Filter>
+    <ClCompile Include="Commands\MoveLeftCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\ClearScene.cpp">
-      <Filter>Scenes</Filter>
+    <ClCompile Include="Commands\MoveRightCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
     <ClCompile Include="$(KamataEngineRoot)\Adapter\Novice.cpp">
       <Filter>Novice</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
+    <ClInclude Include="MovableRectangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TitleScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="Commands\ICommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\StageScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="Commands\MoveLeftCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\ClearScene.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="Commands\MoveRightCommand.h">
+      <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="$(KamataEngineRoot)\Adapter\Novice.h">
       <Filter>Novice</Filter>
